@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sfgrid="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+             xmlns:local="clr-namespace:SfDataGridSample"
+             x:Class="SfDataGridSample.MainPage"
+             Title="Trader Grid">
+
+    <ContentPage.BindingContext>
+        <local:StockViewModel x:Name="viewModel" />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <local:TextForegroundConverter x:Key="textForegroundConverter" />
+        <local:MarketCapConverter x:Key="MarketCapConverter" />
+    </ContentPage.Resources>
+    
+    <sfgrid:SfDataGrid x:Name="dataGrid"
+                       x:DataType="local:StockViewModel"
+                       ItemsSource="{Binding Stocks}"
+                       AutoGenerateColumnsMode="None"
+                       ColumnWidthMode="Fill"
+                       HeaderRowHeight="58"
+                       NavigationMode="Row"
+                       RowHeight="52"
+                       SelectionMode="Multiple"
+                       HorizontalScrollBarVisibility="Always"
+                       VerticalScrollBarVisibility="Always">
+
+        <sfgrid:SfDataGrid.DefaultStyle>
+            <sfgrid:DataGridStyle HeaderRowFontAttributes="Bold" />
+        </sfgrid:SfDataGrid.DefaultStyle>
+
+        <sfgrid:SfDataGrid.Columns>
+
+            <sfgrid:DataGridTextColumn CellTextAlignment="Center"
+                                       HeaderTextAlignment="Center"
+                                       MappingName="Symbol"
+                                       HeaderText="Symbol" />
+
+            <sfgrid:DataGridTextColumn CellTextAlignment="Center"
+                                       HeaderTextAlignment="Center"
+                                       MappingName="CompanyName"
+                                       HeaderText="Company Name" />
+
+
+            <sfgrid:DataGridNumericColumn CellTextAlignment="Center"
+                                          HeaderTextAlignment="Center"
+                                          HeaderText="Price"
+                                          MappingName="Price"
+                                          Format="F2" />
+
+            <sfgrid:DataGridTemplateColumn CellTextAlignment="Center"
+                                           HeaderTextAlignment="Center"
+                                           HeaderText="Change"
+                                           MappingName="Change}">
+
+                <sfgrid:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Label x:Name="label"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               x:DataType="local:Stock"
+                               Text="{Binding Change, StringFormat='{0:F2}'}"
+                               TextColor="{Binding Change, Converter={StaticResource textForegroundConverter}}"/>
+                    </DataTemplate>
+                </sfgrid:DataGridTemplateColumn.CellTemplate>
+            </sfgrid:DataGridTemplateColumn>
+
+            <sfgrid:DataGridTemplateColumn CellTextAlignment="Center"
+                                           HeaderTextAlignment="Center"
+                                           HeaderText="Change%"
+                                           MappingName="ChangePercentage}">
+
+                <sfgrid:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Label x:Name="label"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               x:DataType="local:Stock"
+                               Text="{Binding ChangePercentage, StringFormat='{0:P2}'}"
+                               TextColor="{Binding ChangePercentage, Converter={StaticResource textForegroundConverter}}" />
+                    </DataTemplate>
+                </sfgrid:DataGridTemplateColumn.CellTemplate>
+            </sfgrid:DataGridTemplateColumn>
+
+            <sfgrid:DataGridTextColumn CellTextAlignment="Center"
+                                       HeaderTextAlignment="Center"
+                                       HeaderText="Volume"
+                                       MappingName="Volume">
+            </sfgrid:DataGridTextColumn>
+
+            <sfgrid:DataGridTemplateColumn CellTextAlignment="Center"
+                                           HeaderTextAlignment="Center"
+                                           HeaderText="Market Cap"
+                                           MappingName="MarketCap}">
+
+                <sfgrid:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Label x:Name="label"
+                               FontSize="14"
+                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               x:DataType="local:Stock"
+                               Text="{Binding MarketCap, Converter={StaticResource MarketCapConverter}}" />
+                    </DataTemplate>
+                </sfgrid:DataGridTemplateColumn.CellTemplate>
+            </sfgrid:DataGridTemplateColumn>
+
+            <sfgrid:DataGridNumericColumn CellTextAlignment="Center"
+                                          HeaderTextAlignment="Center"
+                                          HeaderText="Bid"
+                                          MappingName="Bid"
+                                          Format="F2" />
+
+            <sfgrid:DataGridNumericColumn CellTextAlignment="Center"
+                                          HeaderTextAlignment="Center"
+                                          HeaderText="Ask"
+                                          MappingName="Ask"
+                                          Format="F2" />
+
+            <sfgrid:DataGridDateColumn CellTextAlignment="Center"
+                                       HeaderTextAlignment="Center"
+                                       HeaderText="Time"
+                                       MappingName="Time" />
+
+        </sfgrid:SfDataGrid.Columns>
+
+    </sfgrid:SfDataGrid>
+
+</ContentPage>
